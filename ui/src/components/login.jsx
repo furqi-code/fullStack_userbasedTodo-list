@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import axios from "axios";
 
 export function Login() {
@@ -119,12 +119,12 @@ export function Login() {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to='/forgotPassword'
                       className="text-blue-600 hover:underline font-semibold"
                     >
                       Forgot your password?
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -139,12 +139,12 @@ export function Login() {
 
                 <p className="text-slate-900 text-sm mt-3 text-center">
                   Don't have an account?{" "}
-                  <a
-                    href="javascript:void(0);"
+                  <Link
+                    to='/signup'
                     className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold"
                   >
                     Register here
-                  </a>
+                  </Link>
                 </p>
               </form>
             </div>

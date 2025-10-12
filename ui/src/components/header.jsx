@@ -37,6 +37,12 @@ export function Header() {
           <div className="flex gap-4 mt-2 sm:mt-0">
             {!isloggedin ? (
               <>
+              <Link
+                  to="/"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1" style={{textDecoration: 'none'}}
+                >
+                  <span className="text-md">Home</span>
+                </Link>
                 <Link
                   to="/signup"
                   className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1" style={{textDecoration: 'none'}}
@@ -55,7 +61,6 @@ export function Header() {
                 <Link
                   to="/addTask"
                   className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1" style={{textDecoration: 'none'}}
-                  // onClick={addTaskBtn}
                 >
                   <svg
                     className="w-4.5 h-4.5"

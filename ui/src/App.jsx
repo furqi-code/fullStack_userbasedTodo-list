@@ -4,6 +4,7 @@ import { Home } from "../src/components/home";
 import { Login } from "../src/components/login";
 import { SignUp } from "../src/components/signUp";
 import { TaskInput } from "../src/components/task_input";
+import { ForgotPassword } from "./components/forgotPassword";
 import { ShowTasks } from "../src/components/showTasks";
 import { NotFound } from "../src/components/NotFound";
 import { HomeDesign } from "./components/homeDesign";
@@ -25,6 +26,10 @@ const routes = createBrowserRouter([
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/forgotPassword",
+        Component: ForgotPassword,
       },
       {
         path: "/showTask",
