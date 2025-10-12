@@ -1,7 +1,5 @@
 import { useState, useRef, useContext } from "react";
 import { TaskContext } from "../store/contextTask";
-import { useNavigate } from "react-router";
-import axios from "axios";
 
 export function TaskCard({
   task_id,
@@ -16,49 +14,17 @@ export function TaskCard({
   const [isUpdated, setisUpdated] = useState(false);
   const titleRef = useRef();
   const descriptionRef = useRef();
-  const navigate = useNavigate();
-  // const {deleteTask, updateTask} = useContext(TaskContext);
-
-  const deleteTask = (task_id) => {
-    axios({
-      method: "DELETE",
-      url: "http://localhost:1111/tasks/delete",
-      headers: {
-        Authorization: localStorage.getItem("userDetail"),
-      },
-      params: {
-        task_id,
-      },
-    }).then((res) => {
-      console.log(res.data);
-      // navigate("/showTask");
-      window.location.reload();
-    });
-  };
+  const { deleteTask, updateTask } = useContext(TaskContext);
 
   const editTask = (task_id) => {
     const title = titleRef.current.value;
     const description = descriptionRef.current.value;
-    axios({
-      method: "PATCH",
-      url: "http://localhost:1111/tasks/edit",
-      headers: {
-        Authorization: localStorage.getItem("userDetail"),
-      },
-      params: {
-        task_id,
-      },
-      data: {
-        task_id,
-        title,
-        description,
-        status: "just now",
-        updated_at: new Date().toISOString().split("T")[0],
-      },
-    }).then((res) => {
-      console.log(res.data);
-      // navigate("/showTask");
-      window.location.reload();
+    updateTask({
+      task_id,
+      title,
+      description,
+      status: "just now",
+      updated_at: new Date().toISOString().split("T")[0],
     });
     setisEditing(false);
     setisUpdated(true);

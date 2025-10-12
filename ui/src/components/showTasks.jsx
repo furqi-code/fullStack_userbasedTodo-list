@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { TaskCard } from "./taskCard";
 import { TaskContext } from "../store/contextTask";
 
 export function ShowTasks() {
-  // const { taskList } = useContext(TaskContext);
-  const [taskList, setTasks] = useState([]);
+  const { taskList, setTasklist } = useContext(TaskContext);
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
@@ -17,16 +18,17 @@ export function ShowTasks() {
       },
     })
       .then((res) => {
-        setTasks(res.data);
+        setTasklist(res.data);  // tasklist[] state update krdo
       })
       .catch((err) => {
-        // alert("TOKEN NOT FOUND!!");
         setError(true);
         setTimeout(() => {
           navigate("/login");
         }, 3000);
       });
-  }, []);
+  }, [taskList]); // before zero task added was showing after edit & delete 
+  // now i dont have to manually reload to see the correct changes
+  // but this changes the state here also using this setTasklist()
 
   if (error) return <h1>BAD REQUEST, REDIRECTING TO LOGIN</h1>;
   if (taskList.length === 0) return <p>Zero task added</p>;
@@ -35,7 +37,7 @@ export function ShowTasks() {
     <div className="px-4 py-3 ms-[90px]">
       <div className="grid grid-cols-3 gap-4">
         {taskList.map((task) => (
-          <div key={task.id}>
+          <div key={task.task_id}>
             <TaskCard {...task} />
           </div>
         ))}

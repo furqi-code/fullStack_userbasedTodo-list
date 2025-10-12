@@ -1,26 +1,12 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { TaskContext } from "../store/contextTask";
-import axios from "axios";
 
 export function Header() {
-  // const { addTaskBtn, deleteTask } = useContext(TaskContext);
+  const { deleteTask } = useContext(TaskContext);
   const navigate = useNavigate();
-
-  const deleteTask = () => {
-    axios({
-      method: "DELETE",
-      url: "http://localhost:1111/tasks/delete",
-      headers: {
-        Authorization: localStorage.getItem("userDetail"),
-      },
-    }).then((res) => {
-      console.log(res.data);
-      // navigate("/showTask");
-      window.location.reload();
-    });
-  };
-
+  const isloggedin = localStorage.getItem("userDetail");
+  
   return (
     <header className="gradient-header">
       <div className="container mx-auto">
@@ -49,57 +35,64 @@ export function Header() {
           </div>
 
           <div className="flex gap-4 mt-2 sm:mt-0">
-            <Link
-              to="/signup"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1"
-            >
-              <span className="text-md">Sign Up</span>
-            </Link>
-            <Link
-              to="/login"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1"
-            >
-              <span className="text-md">Sign in</span>
-            </Link>
-            <Link
-              to="/addTask"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1"
-              // onClick={addTaskBtn}
-            >
-              <svg
-                className="w-4.5 h-4.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
-              <span className="text-md">Add</span>
-            </Link>
+            {!isloggedin ? (
+              <>
+                <Link
+                  to="/signup"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1" style={{textDecoration: 'none'}}
+                >
+                  <span className="text-md">Sign Up</span>
+                </Link>
+                <Link
+                  to="/login"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1" style={{textDecoration: 'none'}}
+                >
+                  <span className="text-md">Sign in</span>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/addTask"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1" style={{textDecoration: 'none'}}
+                  // onClick={addTaskBtn}
+                >
+                  <svg
+                    className="w-4.5 h-4.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                  <span className="text-md">Add</span>
+                </Link>
 
-            <button
-              type="button"
-              className="bg-white/10 border-2 border-red-400/60 text-red-100 hover:bg-red-500 hover:border-red-500 hover:text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1"
-              onClick={() => {
-                localStorage.removeItem("userDetail");
-                navigate("/");
-              }}
-            >
-              <span className="text-md">Logout</span>
-            </button>
-            <button
-              type="button"
-              className="bg-white/10 border-2 border-red-400/60 text-red-100 hover:bg-red-500 hover:border-red-500 hover:text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1"
-              onClick={() => deleteTask()}
-            >
-              <span className="text-md">🗑</span>
-              <span className="text-md">Clear</span>
-            </button>
+                <button
+                  type="button"
+                  className="bg-white/10 border-2 border-yellow -400/60 text-red-100 hover:bg-yellow-400 hover:border-yellow-400 hover:text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1"
+                  onClick={() => deleteTask()}
+                >
+                  <span className="text-md">🗑</span>
+                  <span className="text-md">Clear</span>
+                </button>
+                <button
+                  type="button"
+                  className="bg-white/10 border-2 border-red-400/60 text-red-100 hover:bg-red-500 hover:border-red-500 hover:text-white font-semibold shadow-sm rounded-full px-3 py-1.5 transition-all duration-300 btn-glow flex items-center space-x-1"
+                  onClick={() => {
+                    localStorage.removeItem("userDetail");
+                    navigate("/");
+                  }}
+                >
+                  <span className="text-md">Logout</span>
+                </button>
+              </>
+            )}
           </div>
         </nav>
       </div>

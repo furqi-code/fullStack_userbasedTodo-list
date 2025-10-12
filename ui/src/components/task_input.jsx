@@ -1,10 +1,9 @@
 import { useRef, useContext } from "react";
 import { useNavigate } from "react-router";
 import { TaskContext } from "../store/contextTask";
-import axios from "axios";
 
-export function TaskInput({ showTaskForm }) {
-  // const { addTask, cancelTaskform } = useContext(TaskContext);
+export function TaskInput() {
+  const { addTask } = useContext(TaskContext);
   const navigate = useNavigate();
   const titleRef = useRef();
   const descriptionRef = useRef();
@@ -23,26 +22,7 @@ export function TaskInput({ showTaskForm }) {
       alert("Try to fill up all the input fields");
       return;
     }
-    // addTask({ title, description, status, due_date, created_at });
-    axios({
-      method: "POST",
-      url: "http://localhost:1111/tasks/add",
-      headers: {
-        Authorization: localStorage.getItem("userDetail"),
-      },
-      data: {
-        title,
-        description,
-        status,
-        due_date,
-        created_at,
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        navigate("/showTask");
-      })
-      .catch((err) => {});
+    addTask({ title, description, status, due_date, created_at });
     titleRef.current.value = "";
     descriptionRef.current.value = "";
     statusRef.current.value = "pending";

@@ -72,8 +72,9 @@ Router.delete("/delete", async (req, res) => {
         [task_id, user_id]
       );
       res.status(200).send({ message: `task ${task_id} deleted from DB` });
-    } else {
-      await executeQuery(`DELETE FROM tasks`);
+    } 
+    else {
+      await executeQuery(`DELETE FROM tasks where user_id = ?`, [user_id]);
       res.status(200).send({ message: "All tasks deleted successfully" });
     }
   } catch (err) {
