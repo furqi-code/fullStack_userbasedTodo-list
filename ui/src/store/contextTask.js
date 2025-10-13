@@ -30,11 +30,9 @@ export function TaskContextProvider({ children }) {
     });
   };
 
-  const getTask = async () => {
-    const getResponse = await axios.get("http://localhost:1111/tasks");
-    dispatch({
-      type: "getTaskList",
-      tasks: getResponse.data,
+  const getTask = () => {
+    axios.get("http://localhost:1111/tasks").then((res) => {
+      setTasklist(res.data)
     });
   };
 

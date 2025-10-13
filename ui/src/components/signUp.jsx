@@ -6,15 +6,17 @@ export function SignUp() {
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
+    setError("");
+    setSuccess("");
     const username = usernameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    setIsLoading(true);
     axios({
       method: "POST",
       url: "http://localhost:1111/signup",
@@ -24,18 +26,16 @@ export function SignUp() {
         password,
       },
     }).then((res) => {
-      console.log("after signUp", res.data);
-      navigate("/login");
+      setSuccess("Signup successfull. Redirecting to login...");
+      setTimeout(() => navigate('/login'),2000);
     }).catch((err) => {
-      setIsLoading(false);  // to re-enter input fields
+      setError("Something is wrong!! can't register your account");
     })
   }
 
   return (
     <>
-      {isLoading ? (
-        <p>Waiting for API RESPONSE</p>
-      ) : (
+      
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
@@ -111,6 +111,9 @@ export function SignUp() {
                 </div>
               </div>
 
+              {error && <p className="text-red-600 text-sm">{error}</p>}
+              {success && <p className="text-green-600 text-sm">{success}</p>}
+
               <div>
                 <button
                   type="submit"
@@ -122,7 +125,7 @@ export function SignUp() {
             </form>
           </div>
         </div>
-      )}
+      
     </>
   );
 }
