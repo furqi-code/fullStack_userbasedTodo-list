@@ -31,8 +31,14 @@ export function TaskContextProvider({ children }) {
   };
 
   const getTask = () => {
-    axios.get("http://localhost:1111/tasks").then((res) => {
-      setTasklist(res.data)
+    axios({
+      method: "GET",
+      url: "http://localhost:1111/tasks",
+      headers: {
+        Authorization: localStorage.getItem("userDetail"),
+      },
+    }).then((res) => {
+      setTasklist(res.data);
     });
   };
 
@@ -49,6 +55,7 @@ export function TaskContextProvider({ children }) {
         },
       });
       console.log("Task added:", postResponse.data);
+      getTask();
       navigate("/showTask");
     } catch (error) {
       console.error("Error adding tasks: ", error);

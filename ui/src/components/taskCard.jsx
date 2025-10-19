@@ -16,10 +16,10 @@ export function TaskCard({
   const descriptionRef = useRef();
   const { deleteTask, updateTask } = useContext(TaskContext);
 
-  const editTask = (task_id) => {
+  const editTask = async (task_id) => {
     const title = titleRef.current.value;
     const description = descriptionRef.current.value;
-    updateTask({
+    await updateTask({
       task_id,
       title,
       description,
@@ -103,7 +103,7 @@ export function TaskCard({
               <button
                 type="button"
                 className="canvaBtn btn-delete"
-                onClick={() => deleteTask(task_id)}
+                onClick={async () => await deleteTask(task_id)}
               >
                 Delete
               </button>
@@ -121,7 +121,7 @@ export function TaskCard({
               <button
                 type="button"
                 className="canvaBtn btn-save"
-                onClick={() => editTask(task_id)}
+                onClick={async () => await editTask(task_id)}
               >
                 💾 save
               </button>

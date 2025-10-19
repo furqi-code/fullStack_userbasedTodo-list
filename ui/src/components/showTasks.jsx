@@ -26,12 +26,10 @@ export function ShowTasks() {
           navigate("/login");
         }, 3000);
       });
-  }, [taskList]); // before passing dependancy[] "Zero task added" was showing after edit & delete 
-  // now i dont have to manually reload to see the correct changes
-  // but this changes the state here also by setTasklist() causing infinite loop to run useEffect 
-
-  if (error) return <h1>BAD REQUEST, REDIRECTING TO LOGIN</h1>;
-  if (taskList.length === 0) return <p>Zero task added</p>;
+  }, []); 
+  
+  if (error) return <h1 className="p-8 ms-24">BAD REQUEST, REDIRECTING TO LOGIN</h1>;
+  if (taskList.length === 0) return <p className="p-8 ms-24">Zero task added</p>;
 
   return (
     <div className="px-4 py-3 ms-[90px]">
